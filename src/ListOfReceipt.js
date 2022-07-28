@@ -4,10 +4,9 @@ import Table from "react-bootstrap/Table";
 
 const ListOfReceipt = () => {
   const { receipts } = useSelector((state) => state.receipts);
-  console.log(receipts);
   return (
     <div>
-      <h1>Total Receipts List {receipts.length} </h1>
+      <h3>Total Receipts List {receipts.length} </h3>
       <Table striped bordered hover>
         <thead>
           <tr>
