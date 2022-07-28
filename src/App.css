@@ -1,5 +1,6 @@
 .home-div {
-  width: 900px;
+  max-width: 900px;
+  width: 90%;
 }
 
 
