@@ -1,11 +1,15 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { addReceipts } from "./redux/features/ReceiptSlice";
 
 const Receipt = () => {
   const paymentMode = ["Cash", "Bank", "Cheque", "PayTm"];
+  const dispatch = useDispatch();
 
   const handleData = (e) => {
     e.preventDefault();
 
+    const buttonName = e.nativeEvent.submitter.name;
     let date = e.target.date;
     let amount = e.target.amount;
     let methods = e.target.methods;
@@ -17,15 +21,18 @@ const Receipt = () => {
       methods: methods.value,
       remark: remark.value,
     };
-
-    const buttonName = e.nativeEvent.submitter.name;
-    if (buttonName === "submit") {
-      console.log(receiptsObj);
-    } else if (buttonName === "cancel") {
+    const receiptClear = () => {
       date.value = "";
       amount.value = "";
       methods.value = [paymentMode[0]];
       remark.value = "";
+    };
+
+    if (buttonName === "submit") {
+      dispatch(addReceipts(receiptsObj));
+      receiptClear();
+    } else if (buttonName === "cancel") {
+      receiptClear();
     }
   };
 
@@ -75,7 +82,7 @@ const Receipt = () => {
             Remark
           </label>
           <input
-            type="number"
+            type="text"
             id="remark"
             className="py-1 px-2 rounded-1 border border-secondary col-8"
             placeholder="Enter Remark"
