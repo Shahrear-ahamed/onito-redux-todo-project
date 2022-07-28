@@ -2,6 +2,7 @@ import React from "react";
 
 const Receipt = () => {
   const paymentMode = ["Cash", "Bank", "Cheque", "Paytm"];
+  
   return (
     <div className="my-5">
       <h4 className="text-decoration-underline fs-6">Receipt Details</h4>
