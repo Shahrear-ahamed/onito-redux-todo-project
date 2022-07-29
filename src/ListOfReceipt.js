@@ -1,12 +1,31 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { useSelector } from "react-redux";
 import Table from "react-bootstrap/Table";
 
 const ListOfReceipt = () => {
+  const [showValue, setShowValue] = useState(false)
+  const [receiptsData, setReceiptsData] = useState([]);
   const { receipts } = useSelector((state) => state.receipts);
+
+  useEffect(()=>{
+    if(showValue){
+      const cashOnly = receipts.filter(cash => cash.methods === "Cash")
+      setReceiptsData(cashOnly)
+    }else {
+      setReceiptsData(receipts)
+    }
+  },[showValue,receipts])
+
+  const showCash=() =>{
+    setShowValue(!showValue)
+  }
+
   return (
     <div>
-      <h3>Total Receipts List {receipts.length} </h3>
+      <h3>Total Receipts List {receiptsData.length} </h3>
+      <div className="w-100 my-3 d-flex justify-content-end">
+        <button className="py-1 px-3 rounded border border-success bg-transparent shadow-sm" onClick={showCash}>Cash</button>
+      </div>
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -18,8 +37,8 @@ const ListOfReceipt = () => {
           </tr>
         </thead>
         <tbody>
-          {receipts.length ? (
-            receipts.map((receipt, i) => (
+          {receiptsData.length ? (
+              receiptsData.map((receipt, i) => (
               <tr key={i}>
                 <td>{i + 1}</td>
                 <td>{receipt.date}</td>
