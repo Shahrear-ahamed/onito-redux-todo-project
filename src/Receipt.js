@@ -31,6 +31,7 @@ const Receipt = () => {
 
     if (buttonName === "submit") {
       if (date.value && amount.value) {
+        setErr(false);
         dispatch(addReceipts(receiptsObj));
         receiptClear();
       } else {
